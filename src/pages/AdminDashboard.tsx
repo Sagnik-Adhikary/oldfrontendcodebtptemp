@@ -2,7 +2,7 @@ import React from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Button } from '../components/ui/button'
-import { Users, MessageCircle, Shield, Loader2 } from 'lucide-react'
+import { Users, MessageCircle, Shield, Loader2, Briefcase } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 export const AdminDashboard: React.FC = () => {
@@ -35,7 +35,7 @@ export const AdminDashboard: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/admin/allowing')}>
             <CardHeader>
               <div className="flex items-center gap-3">
@@ -67,6 +67,23 @@ export const AdminDashboard: React.FC = () => {
                 View and respond to support messages from users
               </p>
               <Button className="w-full">View Messages</Button>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/admin/launchpad/requests')}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-purple-100 rounded-lg">
+                  <Briefcase className="h-6 w-6 text-purple-600" />
+                </div>
+                <CardTitle>Service Requests</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600 mb-4">
+                View and manage project requests from students
+              </p>
+              <Button className="w-full">View Requests</Button>
             </CardContent>
           </Card>
         </div>

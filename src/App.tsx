@@ -38,6 +38,13 @@ import { AdminDashboard } from './pages/AdminDashboard'
 import { AdminAllowingPage } from './pages/AdminAllowingPage'
 import { AdminSupportPage } from './pages/AdminSupportPage'
 import { SupportPage } from './pages/SupportPage'
+import { LaunchpadPage } from './pages/launchpad/LaunchpadPage'
+import { ServiceDetailPage } from './pages/launchpad/ServiceDetailPage'
+import { ProjectSubmissionPage } from './pages/launchpad/ProjectSubmissionPage'
+import { MyServicesPage } from './pages/launchpad/MyServicesPage'
+import { CreateServicePage } from './pages/launchpad/CreateServicePage'
+import { EditServicePage } from './pages/launchpad/EditServicePage'
+import { AdminServiceRequestsPage } from './pages/AdminServiceRequestsPage'
 
 function App() {
   return (
@@ -59,6 +66,17 @@ function App() {
             <Route path="/mentors" element={<MentorsPage />} />
             <Route path="/find-mentors" element={<FindMentorsPage />} />
             <Route path="/alumni-connect" element={<AlumniConnectPage />} />
+            
+            {/* Launchpad Routes */}
+            <Route path="/launchpad" element={<LaunchpadPage />} />
+            <Route path="/launchpad/services/:id" element={<ServiceDetailPage />} />
+            <Route path="/launchpad/submit-project" element={<ProjectSubmissionPage />} />
+            
+            {/* Manage Services Routes */}
+            <Route path="/alumni/services" element={<MyServicesPage />} />
+            <Route path="/alumni/services/create" element={<CreateServicePage />} />
+            <Route path="/alumni/services/:id/edit" element={<EditServicePage />} />
+
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:id" element={<BlogPostPage />} />
             <Route path="/alumni/blogs/:id/edit" element={<EditBlogPage />} />
@@ -86,6 +104,7 @@ function App() {
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/allowing" element={<AdminAllowingPage />} />
             <Route path="/admin/support" element={<AdminSupportPage />} />
+            <Route path="/admin/launchpad/requests" element={<AdminServiceRequestsPage />} />
           </Routes>
         </Layout>
       </Router>

@@ -59,6 +59,7 @@ export const Header: React.FC = () => {
     } else if (user.role === 'alumni') {
       return [
         { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Launchpad', href: '/launchpad' },
         { label: 'Messages', href: '/messages' },
         { label: 'My Projects', href: '/alumni/projects' },
         { label: 'My Blogs', href: '/alumni/blogs' },
@@ -96,6 +97,7 @@ export const Header: React.FC = () => {
     } else if (user.role === 'alumni') {
       return [
         { name: 'Dashboard', href: '/dashboard', icon: GraduationCap },
+        { name: 'Launchpad', href: '/launchpad', icon: BookOpen },
         { name: 'Messages', href: '/messages', icon: MessageCircle },
         { name: 'My Projects', href: '/alumni/projects', icon: Users },
         { name: 'My Blogs', href: '/alumni/blogs', icon: BookOpen },

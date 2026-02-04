@@ -303,6 +303,15 @@ export const AlumniDashboard: React.FC = () => {
               </Link>
             </Button>
             
+            <Button asChild variant="outline" className="h-24 flex flex-col items-center justify-center bg-gradient-to-br from-yellow-100 to-orange-200 hover:from-yellow-200 hover:to-orange-300 text-yellow-700 shadow hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+              <Link to="/alumni/services">
+                <div className="p-3 rounded-full bg-yellow-100 group-hover:bg-yellow-200 transition-all duration-300 mb-2">
+                  <Briefcase className="h-6 w-6" />
+                </div>
+                <span className="text-sm font-semibold">Manage Services</span>
+              </Link>
+            </Button>
+
             <Button asChild variant="outline" className="h-24 flex flex-col items-center justify-center bg-gradient-to-br from-teal-100 to-cyan-200 hover:from-teal-200 hover:to-cyan-300 text-teal-700 shadow hover:shadow-md transition-all duration-300 hover:-translate-y-1">
               <Link to="/alumni/projects">
                 <div className="p-3 rounded-full bg-teal-100 group-hover:bg-cyan-200 transition-all duration-300 mb-2">
