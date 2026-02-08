@@ -45,6 +45,15 @@ import { MyServicesPage } from './pages/launchpad/MyServicesPage'
 import { CreateServicePage } from './pages/launchpad/CreateServicePage'
 import { EditServicePage } from './pages/launchpad/EditServicePage'
 import { AdminServiceRequestsPage } from './pages/AdminServiceRequestsPage'
+import { CoursesPage } from './pages/courses/CoursesPage'
+import { CourseDetailsPage } from './pages/courses/CourseDetailsPage'
+import { AdminCoursesPage } from './pages/admin/AdminCoursesPage'
+import { AdminCourseManagementPage } from './pages/admin/AdminCourseManagementPage'
+import NavbarDemo from './pages/NavbarDemo'
+
+import { AdminEventsPage } from './pages/admin/AdminEventsPage'
+import { AdminEventDetailsPage } from './pages/admin/AdminEventDetailsPage'
+import { EventsPage } from './pages/events/EventsPage'
 
 function App() {
   return (
@@ -79,6 +88,11 @@ function App() {
 
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:id" element={<BlogPostPage />} />
+            
+            {/* Courses Routes */}
+            <Route path="/courses" element={<CoursesPage />} />
+            <Route path="/courses/:id" element={<CourseDetailsPage />} />
+            
             <Route path="/alumni/blogs/:id/edit" element={<EditBlogPage />} />
             <Route path="/student-dashboard" element={<StudentDashboard />} />
             <Route path="/student/applications" element={<StudentApplicationsPage />} />
@@ -105,11 +119,20 @@ function App() {
             <Route path="/admin/allowing" element={<AdminAllowingPage />} />
             <Route path="/admin/support" element={<AdminSupportPage />} />
             <Route path="/admin/launchpad/requests" element={<AdminServiceRequestsPage />} />
+            
+            <Route path="/admin/courses" element={<AdminCoursesPage />} />
+            <Route path="/admin/courses/:id" element={<AdminCourseManagementPage />} />
+            
+            {/* Events Routes */}
+            <Route path="/events" element={<EventsPage />} />
+            <Route path="/admin/events" element={<AdminEventsPage />} />
+            <Route path="/admin/events/:id" element={<AdminEventDetailsPage />} />
+            
+            <Route path="/navbar-demo" element={<NavbarDemo />} />
           </Routes>
         </Layout>
       </Router>
     </AuthProvider>
   )
-}
-
+}     
 export default App

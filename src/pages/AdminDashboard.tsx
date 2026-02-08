@@ -2,7 +2,7 @@ import React from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Button } from '../components/ui/button'
-import { Users, MessageCircle, Shield, Loader2, Briefcase } from 'lucide-react'
+import { Users, MessageCircle, Shield, Loader2, Briefcase, GraduationCap, Calendar } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 export const AdminDashboard: React.FC = () => {
@@ -84,6 +84,40 @@ export const AdminDashboard: React.FC = () => {
                 View and manage project requests from students
               </p>
               <Button className="w-full">View Requests</Button>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/admin/courses')}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-yellow-100 rounded-lg">
+                  <GraduationCap className="h-6 w-6 text-yellow-600" />
+                </div>
+                <CardTitle>Course Management</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600 mb-4">
+                Create courses, manage details, and view enrollments
+              </p>
+              <Button className="w-full">Manage Courses</Button>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/admin/events')}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-red-100 rounded-lg">
+                  <Calendar className="h-6 w-6 text-red-600" />
+                </div>
+                <CardTitle>Manage Events</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600 mb-4">
+                Create and manage events like webinars and podcasts
+              </p>
+              <Button className="w-full">Manage Events</Button>
             </CardContent>
           </Card>
         </div>
