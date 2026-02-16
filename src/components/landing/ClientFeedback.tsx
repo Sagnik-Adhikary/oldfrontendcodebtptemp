@@ -1,6 +1,6 @@
 "use client";
 import { useRef } from "react";
-import { TimelineContent } from "@/components/ui/timeline-animation";
+import { TimelineContent } from "../ui/timeline-animation";
 
 // Dummy image URLs since unsplash links in example might expire or be slow. 
 // Using placeholder avatars for now or keeping originals if they work.

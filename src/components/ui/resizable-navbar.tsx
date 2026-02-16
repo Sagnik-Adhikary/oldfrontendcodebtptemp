@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom"; // Use Link from react-router-dom
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import {
   motion,
