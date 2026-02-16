@@ -1,6 +1,6 @@
 // API Configuration
 // Uses environment variable or falls back to production URL
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://alumconnect-s4c7.onrender.com'
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001'
 
 // Helper function to construct API URLs
 export const getApiUrl = (path: string): string => {

@@ -145,9 +145,33 @@ export const AlumniDashboard: React.FC = () => {
     )
   }
 
+  // Show waiting message if not approved
+  if (user.is_approved === false) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 flex items-center justify-center p-4">
+        <Card className="max-w-md w-full">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-yellow-500" />
+              Account Pending Approval
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-gray-600 mb-4">
+              Your account is pending admin approval. You can browse the site, but full access will be granted once an admin reviews your registration.
+            </p>
+            <p className="text-sm text-gray-500">
+              We'll notify you once your account has been approved.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50">
-      <div className="container mx-auto px-4 py-16">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 pt-24 pb-12">
+      <div className="container mx-auto px-4">
         {/* Header Section */}
         <div className="mb-12">
           <div className="relative">
@@ -279,6 +303,15 @@ export const AlumniDashboard: React.FC = () => {
               </Link>
             </Button>
             
+            <Button asChild variant="outline" className="h-24 flex flex-col items-center justify-center bg-gradient-to-br from-yellow-100 to-orange-200 hover:from-yellow-200 hover:to-orange-300 text-yellow-700 shadow hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+              <Link to="/alumni/services">
+                <div className="p-3 rounded-full bg-yellow-100 group-hover:bg-yellow-200 transition-all duration-300 mb-2">
+                  <Briefcase className="h-6 w-6" />
+                </div>
+                <span className="text-sm font-semibold">Manage Services</span>
+              </Link>
+            </Button>
+
             <Button asChild variant="outline" className="h-24 flex flex-col items-center justify-center bg-gradient-to-br from-teal-100 to-cyan-200 hover:from-teal-200 hover:to-cyan-300 text-teal-700 shadow hover:shadow-md transition-all duration-300 hover:-translate-y-1">
               <Link to="/alumni/projects">
                 <div className="p-3 rounded-full bg-teal-100 group-hover:bg-cyan-200 transition-all duration-300 mb-2">

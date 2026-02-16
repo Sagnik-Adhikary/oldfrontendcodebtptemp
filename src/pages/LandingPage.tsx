@@ -14,6 +14,7 @@ import carouselImage3 from "../images/carousel-3.webp";
 import carouselImage4 from "../images/carousel-4.webp";
 import { useAuth } from '../contexts/AuthContext';
 import { ProfileModal } from '../components/ProfileModal';
+import { ClientFeedback } from '../components/landing/ClientFeedback';
 import { getApiUrl } from '../config'
 import {
   ArrowRight,
@@ -39,7 +40,6 @@ interface Project {
   created_by_name: string
   created_by_email: string
 }
-
 
 interface Alumni {
   id: number
@@ -91,10 +91,7 @@ export const LandingPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [viewingAlumniId, setViewingAlumniId] = useState<number | null>(null);
 
-  // Get the token from your AuthContext
   const { token } = useAuth();
-
-  // Determine the link based on whether the token exists
   const getStartedLink = token ? '/alumni-connect' : '/register';
 
   useEffect(() => {
@@ -103,7 +100,6 @@ export const LandingPage: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      // Fetch projects and alumni in parallel
       const [projectsResponse, alumniResponse] = await Promise.all([
         fetch(getApiUrl('/api/projects')),
         fetch(getApiUrl('/api/alumni'))
@@ -111,12 +107,12 @@ export const LandingPage: React.FC = () => {
 
       if (projectsResponse.ok) {
         const projects = await projectsResponse.json()
-        setFeaturedProjects(projects.slice(0, 3)) // Show first 3 projects
+        setFeaturedProjects(projects.slice(0, 3))
       }
 
       if (alumniResponse.ok) {
         const alumni = await alumniResponse.json()
-        setAlumniStories(alumni.slice(0, 3)) // Show first 3 alumni
+        setAlumniStories(alumni.slice(0, 3))
       }
     } catch (error) {
       console.error('Error fetching data:', error)
@@ -127,33 +123,24 @@ export const LandingPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-
-      {/* --- Responsive Carousel Section --- */}
+      {/* Responsive Carousel Section */}
       <section className='w-full relative'>
         <Carousel>
           {carouselSlidesData.map((slide, i) => (
             <div
               key={i}
-              // We'll use 85% of the viewport height on mobile to hint that there's more content below,
-              // and full-screen height on medium screens and up.
               className="relative h-[85vh] md:h-screen w-full flex items-center justify-center overflow-hidden"
             >
-              {/* Layer 1: Background Image */}
               <img
                 src={slide.image}
                 alt={slide.title}
                 className="absolute inset-0 w-full h-full object-cover brightness-[0.4]"
               />
-
-              {/* Layer 2: Stars Animation */}
               <div className="absolute inset-0 z-0">
                 <StarsAnimation starCount={100} speed={0.5} />
               </div>
-
-              {/* Layer 3: Text Content */}
               <div className="relative z-10 text-center text-white p-4 max-w-4xl mx-auto">
                 <h1 className={
-                  // On mobile (base): text-4xl. On small screens (sm): text-5xl. On medium screens (md): text-7xl.
                   `text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight drop-shadow-md 
             bg-gradient-to-r ${slide.baseGradient} bg-clip-text text-transparent`
                 }>
@@ -163,35 +150,26 @@ export const LandingPage: React.FC = () => {
                   </span>
                 </h1>
                 <p className="mt-4 text-lg md:text-xl leading-relaxed opacity-90 drop-shadow-md">
-                  {/* On mobile (base): text-lg. On medium screens (md): text-xl. */}
                   {slide.description}
                 </p>
               </div>
-
-              {/* ADDED: Mobile-only scroll down indicator */}
               <div className="absolute bottom-10 left-1/2 -translate-x-1/2 md:hidden">
                 <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
                   <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
                 </div>
               </div>
-
             </div>
           ))}
         </Carousel>
       </section>
 
-
-
       {/* Hero Section */}
       <section className="relative flex items-center justify-center overflow-hidden py-20">
-        {/* Stars Animation */}
         <StarsAnimation
           className="opacity-90"
           starCount={150}
           speed={1.5}
         />
-
-        {/* Floating Elements */}
         <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-r from-blue-100 to-blue-200 rounded-full opacity-20 animate-pulse"></div>
         <div className="absolute top-40 right-20 w-16 h-16 bg-gradient-to-r from-blue-200 to-blue-300 rounded-full opacity-30 animate-bounce"></div>
         <div className="absolute bottom-20 left-1/4 w-12 h-12 bg-gradient-to-r from-blue-100 to-blue-200 rounded-full opacity-25 animate-pulse"></div>
@@ -218,9 +196,7 @@ export const LandingPage: React.FC = () => {
             </div>
           </div>
         </div>
-
       </section>
-
 
       {/* Scroll Indicator Section */}
       <section className="py-2 flex justify-center">
@@ -230,8 +206,6 @@ export const LandingPage: React.FC = () => {
           </div>
         </div>
       </section>
-
-
 
       {/* Featured Projects */}
       <section className="py-20">
@@ -379,7 +353,7 @@ export const LandingPage: React.FC = () => {
                         } else {
                           toast.error('You have to log in to connect');
                         }
-                      }} // Change from Link to Button with onClick
+                      }}
                     >
                       Connect
                       <ArrowRight className="ml-1 h-3 w-3" />
@@ -391,6 +365,9 @@ export const LandingPage: React.FC = () => {
           )}
         </div>
       </section>
+
+      {/* Client Feedback Section */}
+      <ClientFeedback />
 
       {/* Call to Action */}
       <section className="py-20">
@@ -420,7 +397,7 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Adding this Profile Modal at the end */}
+      {/* Profile Modal */}
       {viewingAlumniId && (
         <ProfileModal
           userId={viewingAlumniId}

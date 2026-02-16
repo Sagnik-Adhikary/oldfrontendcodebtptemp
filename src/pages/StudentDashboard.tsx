@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
 import { Badge } from '../components/ui/badge'
 import { Button } from '../components/ui/button'
-import { Loader2, Briefcase, ArrowRight, BookOpen, UserPlus, Search, TrendingUp, Clock, CheckCircle, MessageCircle } from 'lucide-react'
+import { Loader2, Briefcase, ArrowRight, BookOpen, UserPlus, Search, TrendingUp, Clock, CheckCircle, MessageCircle, GraduationCap, Calendar } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { CompletedProjectCard } from '../components/CompletedProjectCard'
 import { getApiUrl } from '../config'
@@ -239,6 +239,18 @@ export const StudentDashboard: React.FC = () => {
               <Link to="/messages">
                 <MessageCircle className="h-6 w-6 mb-2" />
                 <span className="text-sm font-semibold">Messages</span>
+              </Link>
+            </Button>
+            <Button asChild className="h-24 flex flex-col items-center justify-center bg-gradient-to-br from-purple-100 to-pink-200 hover:from-purple-200 hover:to-pink-300 text-purple-700 shadow hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+              <Link to="/my-courses">
+                <GraduationCap className="h-6 w-6 mb-2" />
+                <span className="text-sm font-semibold">My Courses</span>
+              </Link>
+            </Button>
+            <Button asChild className="h-24 flex flex-col items-center justify-center bg-gradient-to-br from-orange-100 to-amber-200 hover:from-orange-200 hover:to-amber-300 text-orange-700 shadow hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+              <Link to="/my-events">
+                <Calendar className="h-6 w-6 mb-2" />
+                <span className="text-sm font-semibold">My Events</span>
               </Link>
             </Button>
           </div>

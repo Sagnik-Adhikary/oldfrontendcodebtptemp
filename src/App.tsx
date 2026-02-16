@@ -12,7 +12,6 @@ import { BlogPage } from './pages/BlogPage'
 import { BlogPostPage } from './pages/BlogPostPage'
 import { StudentDashboard } from './pages/StudentDashboard'
 import { AlumniDashboard } from './pages/AlumniDashboard'
-import { AdminDashboard } from './pages/AdminDashboard'
 import { ProfilePage } from './pages/ProfilePage'
 import { CreateProjectPage } from './pages/CreateProjectPage'
 import { CreateBlogPage } from './pages/CreateBlogPage'
@@ -34,6 +33,31 @@ import Team from './pages/Team'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfService from './pages/TermsOfService'
 import { EditProjectPage } from './pages/EditProjectPage'
+import { AdminLoginPage } from './pages/AdminLoginPage'
+import { AdminDashboard } from './pages/AdminDashboard'
+import { AdminAllowingPage } from './pages/AdminAllowingPage'
+import { AdminSupportPage } from './pages/AdminSupportPage'
+import { SupportPage } from './pages/SupportPage'
+import { LaunchpadPage } from './pages/launchpad/LaunchpadPage'
+import { ServiceDetailPage } from './pages/launchpad/ServiceDetailPage'
+import { ProjectSubmissionPage } from './pages/launchpad/ProjectSubmissionPage'
+import { MyServicesPage } from './pages/launchpad/MyServicesPage'
+import { CreateServicePage } from './pages/launchpad/CreateServicePage'
+import { EditServicePage } from './pages/launchpad/EditServicePage'
+import { AdminServiceRequestsPage } from './pages/AdminServiceRequestsPage'
+import { CoursesPage } from './pages/courses/CoursesPage'
+import { CourseDetailsPage } from './pages/courses/CourseDetailsPage'
+import { MyCoursesPage } from './pages/courses/MyCoursesPage'
+import { AdminCoursesPage } from './pages/admin/AdminCoursesPage'
+import { AdminCourseManagementPage } from './pages/admin/AdminCourseManagementPage'
+import { AdminUserManagementPage } from './pages/admin/AdminUserManagementPage'
+import NavbarDemo from './pages/NavbarDemo'
+
+import { AdminEventsPage } from './pages/admin/AdminEventsPage'
+import { AdminEventDetailsPage } from './pages/admin/AdminEventDetailsPage'
+import { EventsPage } from './pages/events/EventsPage'
+import { EventDetailPage } from './pages/events/EventDetailPage'
+import { MyEventsPage } from './pages/events/MyEventsPage'
 
 function App() {
   return (
@@ -55,13 +79,29 @@ function App() {
             <Route path="/mentors" element={<MentorsPage />} />
             <Route path="/find-mentors" element={<FindMentorsPage />} />
             <Route path="/alumni-connect" element={<AlumniConnectPage />} />
+            
+            {/* Launchpad Routes */}
+            <Route path="/launchpad" element={<LaunchpadPage />} />
+            <Route path="/launchpad/services/:id" element={<ServiceDetailPage />} />
+            <Route path="/launchpad/submit-project" element={<ProjectSubmissionPage />} />
+            
+            {/* Manage Services Routes */}
+            <Route path="/alumni/services" element={<MyServicesPage />} />
+            <Route path="/alumni/services/create" element={<CreateServicePage />} />
+            <Route path="/alumni/services/:id/edit" element={<EditServicePage />} />
+
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:id" element={<BlogPostPage />} />
+            
+            {/* Courses Routes */}
+            <Route path="/courses" element={<CoursesPage />} />
+            <Route path="/courses/:id" element={<CourseDetailsPage />} />
+            <Route path="/my-courses" element={<MyCoursesPage />} />
+            
             <Route path="/alumni/blogs/:id/edit" element={<EditBlogPage />} />
             <Route path="/student-dashboard" element={<StudentDashboard />} />
             <Route path="/student/applications" element={<StudentApplicationsPage />} />
             <Route path="/founders-dashboard" element={<AlumniDashboard />} />
-            <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/dashboard" element={<DashboardRouter />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/profile/:id" element={<ProfilePage />} />
@@ -78,11 +118,29 @@ function App() {
             <Route path="/team" element={<Team />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/support" element={<SupportPage />} />
+            <Route path="/admin/login" element={<AdminLoginPage />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/allowing" element={<AdminAllowingPage />} />
+            <Route path="/admin/support" element={<AdminSupportPage />} />
+            <Route path="/admin/launchpad/requests" element={<AdminServiceRequestsPage />} />
+            <Route path="/admin/users" element={<AdminUserManagementPage />} />
+            
+            <Route path="/admin/courses" element={<AdminCoursesPage />} />
+            <Route path="/admin/courses/:id" element={<AdminCourseManagementPage />} />
+            
+            {/* Events Routes */}
+            <Route path="/events" element={<EventsPage />} />
+            <Route path="/events/:id" element={<EventDetailPage />} />
+            <Route path="/my-events" element={<MyEventsPage />} />
+            <Route path="/admin/events" element={<AdminEventsPage />} />
+            <Route path="/admin/events/:id" element={<AdminEventDetailsPage />} />
+            
+            <Route path="/navbar-demo" element={<NavbarDemo />} />
           </Routes>
         </Layout>
       </Router>
     </AuthProvider>
   )
-}
-
+}     
 export default App

@@ -1,112 +1,208 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Mail, MapPin, Phone } from 'lucide-react'
-import kgp_logo from "../../images/kgp_logo.png"
+import React from "react";
+import { Link } from "react-router-dom";
+import {
+  Facebook,
+  Github,
+  Instagram,
+  Mail,
+  MapPin,
+  Phone,
+  Twitter,
+} from "lucide-react";
+import kgp_logo from "../../images/kgp_logo.png";
+
+const data = {
+  facebookLink: "#",
+  instaLink: "#",
+  twitterLink: "#",
+  githubLink: "#",
+  platform: {
+    projects: "/projects",
+    register: "/register",
+    messages: "/messages",
+    launchpad: "/launchpad",
+  },
+  about: {
+    history: "/about",
+    team: "/team",
+    blog: "/blog",
+  },
+  help: {
+    privacy: "/privacy-policy",
+    terms: "/terms-of-service",
+    support: "/support",
+  },
+  contact: {
+    email: "launchpad@iitkgp.ac.in",
+    phone: "+91 3222 255221",
+    address: "IIT Kharagpur, West Bengal",
+  },
+  company: {
+    name: "KGP Forge",
+    description:
+      "Connecting students with alumni, showcasing innovation, and building the future of IIT Kharagpur's startup ecosystem.",
+    logo: kgp_logo,
+  },
+};
+
+const socialLinks = [
+  { icon: Facebook, label: "Facebook", href: data.facebookLink },
+  { icon: Instagram, label: "Instagram", href: data.instaLink },
+  { icon: Twitter, label: "Twitter", href: data.twitterLink },
+  { icon: Github, label: "GitHub", href: data.githubLink },
+];
+
+const aboutLinks = [
+  { text: "About Us", href: data.about.history },
+  { text: "Meet the Team", href: data.about.team },
+  { text: "Blog", href: data.about.blog },
+];
+
+const platformLinks = [
+  { text: "Projects", href: data.platform.projects },
+  { text: "Launchpad", href: data.platform.launchpad },
+  { text: "Register", href: data.platform.register },
+  { text: "Messages", href: data.platform.messages },
+];
+
+const helpfulLinks = [
+  { text: "Privacy Policy", href: data.help.privacy },
+  { text: "Terms of Service", href: data.help.terms },
+  { text: "Support", href: data.help.support },
+];
+
+const contactInfo = [
+  { icon: Mail, text: data.contact.email },
+  { icon: Phone, text: data.contact.phone },
+  { icon: MapPin, text: data.contact.address, isAddress: true },
+];
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-muted/50 border-t">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Logo and Description */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-            <img
-              src={kgp_logo}
-              alt="IIT KGP"
-              className="h-12 w-12 object-contain"
-            />
-            <img
-              src="/e_cell.png"
-              alt="KGP Forge"
-              className="h-12 w-12 object-cover rounded-full"
-            />
-            <span className="text-lg font-bold">KGP Forge</span>
+    <footer className="bg-white mt-16 w-full place-self-end rounded-t-xl border-t">
+      <div className="container mx-auto px-4 pt-16 pb-6 sm:px-6 lg:px-8 lg:pt-24">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          <div>
+            <div className="text-primary flex justify-center gap-2 sm:justify-start items-center">
+              <img
+                src={data.company.logo}
+                alt="IIT KGP Logo"
+                className="h-10 w-10 object-contain"
+              />
+              <img
+                src="/e_cell.png"
+                alt="E-Cell Logo"
+                className="h-10 w-10 object-cover rounded-full"
+              />
+              <span className="text-2xl font-semibold">
+                {data.company.name}
+              </span>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Connecting students with alumni, showcasing innovation, and building the future of IIT Kharagpur's startup ecosystem.
+
+            <p className="text-muted-foreground mt-6 max-w-md text-center leading-relaxed sm:max-w-xs sm:text-left">
+              {data.company.description}
             </p>
-          </div>
 
-          {/* Platform */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold">Platform</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link to="/projects" className="text-muted-foreground hover:text-primary transition-colors">
-                  Projects
-                </Link>
-              </li>
-              <li>
-                <Link to="register" className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  Register
-                </Link>
-              </li>
-              <li>
-                <Link to="/messages" className="text-muted-foreground hover:text-primary transition-colors">
-                  Messages
-                </Link>
-              </li>
+            <ul className="mt-8 flex justify-center gap-6 sm:justify-start md:gap-8">
+              {socialLinks.map(({ icon: Icon, label, href }) => (
+                <li key={label}>
+                  <Link
+                    to={href}
+                    className="text-primary hover:text-primary/80 transition"
+                  >
+                    <span className="sr-only">{label}</span>
+                    <Icon className="w-6 h-6" />
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* About Info */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold">About Info</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link to="/team" className="text-muted-foreground hover:text-primary transition-colors">
-                  Team
-                </Link>
-              </li>
-              <li>
-                <Link to="/blog" className="text-muted-foreground hover:text-primary transition-colors">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">
-                  About
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4 lg:col-span-2">
+            <div className="text-center sm:text-left">
+              <p className="text-lg font-medium">About Us</p>
+              <ul className="mt-8 space-y-4 text-sm">
+                {aboutLinks.map(({ text, href }) => (
+                  <li key={text}>
+                    <Link
+                      className="text-muted-foreground hover:text-primary transition"
+                      to={href}
+                    >
+                      {text}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Contact Info */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold">Contact</h3>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center space-x-2 text-muted-foreground">
-                <MapPin className="h-4 w-4" />
-                <span>IIT Kharagpur, West Bengal</span>
-              </div>
-              <div className="flex items-center space-x-2 text-muted-foreground">
-                <Mail className="h-4 w-4" />
-                <span>launchpad@iitkgp.ac.in</span>
-              </div>
-              <div className="flex items-center space-x-2 text-muted-foreground">
-                <Phone className="h-4 w-4" />
-                <span>+91 3222 255221</span>
-              </div>
+            <div className="text-center sm:text-left">
+              <p className="text-lg font-medium">Platform</p>
+              <ul className="mt-8 space-y-4 text-sm">
+                {platformLinks.map(({ text, href }) => (
+                  <li key={text}>
+                    <Link
+                      className="text-muted-foreground hover:text-primary transition"
+                      to={href}
+                    >
+                      {text}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="text-center sm:text-left">
+              <p className="text-lg font-medium">Helpful Links</p>
+              <ul className="mt-8 space-y-4 text-sm">
+                {helpfulLinks.map(({ text, href }) => (
+                  <li key={text}>
+                    <Link
+                      to={href}
+                      className="text-muted-foreground hover:text-primary transition"
+                    >
+                      {text}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="text-center sm:text-left">
+              <p className="text-lg font-medium">Contact Us</p>
+              <ul className="mt-8 space-y-4 text-sm">
+                {contactInfo.map(({ icon: Icon, text, isAddress }) => (
+                  <li key={text}>
+                    <div className="flex items-center justify-center gap-1.5 sm:justify-start">
+                      <Icon className="text-primary w-5 h-5 shrink-0" />
+                      {isAddress ? (
+                        <address className="text-muted-foreground -mt-0.5 flex-1 not-italic transition">
+                          {text}
+                        </address>
+                      ) : (
+                        <span className="text-muted-foreground flex-1 transition">
+                          {text}
+                        </span>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
 
-        <div className="border-t mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} KGP Forge. All rights reserved.
-          </p>
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            <a href="/privacy-policy" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-              Privacy Policy
-            </a>
-            <a href="/terms-of-service" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-              Terms of Service
-            </a>
+        <div className="mt-12 border-t pt-6">
+          <div className="text-center sm:flex sm:justify-between sm:text-left">
+            <p className="text-sm text-muted-foreground">
+              <span className="block sm:inline">All rights reserved.</span>
+            </p>
+
+            <p className="text-muted-foreground mt-4 text-sm transition sm:order-first sm:mt-0">
+              &copy; {new Date().getFullYear()} {data.company.name}
+            </p>
           </div>
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};

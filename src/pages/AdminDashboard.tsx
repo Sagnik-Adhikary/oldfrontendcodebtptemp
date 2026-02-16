@@ -1,134 +1,148 @@
-import { useEffect, useState } from 'react'
+import React from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/card'
-import { Button } from '../components/ui/button' 
-import { Loader2, Check, X, User, Mail, Calendar,} from 'lucide-react'
-import { getApiUrl } from '../config'
-import toast from 'react-hot-toast'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
+import { Button } from '../components/ui/button'
+import { Users, MessageCircle, Shield, Loader2, Briefcase, GraduationCap, Calendar } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { AdminStatsSection } from '../components/admin/AdminStatsSection'
 
-export const AdminDashboard = () => {
-  const { token } = useAuth()
-  const [pendingFounders, setPendingFounders] = useState<any[]>([])
-  const [supportMessages, setSupportMessages] = useState<any[]>([])
-  const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState('approvals')
+export const AdminDashboard: React.FC = () => {
+  const { user, isLoading } = useAuth()
+  const navigate = useNavigate()
 
-  const fetchData = async () => {
-    try {
-      const [foundersRes, messagesRes] = await Promise.all([
-        fetch(getApiUrl('/api/admin/pending-founders'), {
-          headers: { Authorization: `Bearer ${token}` }
-        }),
-        fetch(getApiUrl('/api/admin/support-messages'), {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-      ])
-
-      if (foundersRes.ok) setPendingFounders(await foundersRes.json())
-      if (messagesRes.ok) setSupportMessages(await messagesRes.json())
-    } catch (error) {
-      console.error("Failed to fetch admin data", error)
-    } finally {
-      setLoading(false)
-    }
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+      </div>
+    )
   }
 
-  useEffect(() => {
-    fetchData()
-  }, [token])
-
-  const handleApproval = async (id: number, action: 'approve' | 'reject') => {
-    try {
-      const res = await fetch(getApiUrl(`/api/admin/founders/${id}/${action}`), {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      if (res.ok) {
-        toast.success(`Founder ${action}d successfully`)
-        setPendingFounders(prev => prev.filter(f => f.id !== id))
-      }
-    } catch (error) {
-      toast.error("Action failed")
-    }
+  if (!user || user.role !== 'admin') {
+    navigate('/admin/login')
+    return null
   }
-
-  if (loading) return <div className="flex justify-center p-10"><Loader2 className="animate-spin" /></div>
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Admin Dashboard</h1>
-
-        <div className="flex space-x-4 mb-6">
-          <Button 
-            variant={activeTab === 'approvals' ? 'default' : 'outline'}
-            onClick={() => setActiveTab('approvals')}
-          >
-            Pending Approvals ({pendingFounders.length})
-          </Button>
-          <Button 
-            variant={activeTab === 'support' ? 'default' : 'outline'}
-            onClick={() => setActiveTab('support')}
-          >
-            Support Messages ({supportMessages.length})
-          </Button>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 pt-24">
+      <div className="container mx-auto px-4 pb-12">
+        <div className="mb-12">
+          <div className="flex items-center gap-3 mb-4">
+            <Shield className="h-10 w-10 text-blue-600" />
+            <h1 className="text-5xl font-bold text-gray-800">Admin Dashboard</h1>
+          </div>
+          <p className="text-xl text-gray-600">
+            Welcome back, {user.name}! Manage the platform from here.
+          </p>
         </div>
 
-        {activeTab === 'approvals' && (
-          <div className="space-y-4">
-            {pendingFounders.length === 0 ? (
-              <p className="text-gray-500">No pending approvals.</p>
-            ) : (
-              pendingFounders.map(founder => (
-                <Card key={founder.id}>
-                  <CardContent className="p-6 flex items-center justify-between">
-                    <div>
-                      <h3 className="font-bold text-lg">{founder.name}</h3>
-                      <div className="text-sm text-gray-500 flex flex-col gap-1">
-                        <span className="flex items-center gap-2"><Mail className="w-4 h-4"/> {founder.email}</span>
-                        <span className="flex items-center gap-2"><User className="w-4 h-4"/> Class of {founder.graduation_year} • {founder.department}</span>
-                        <span className="flex items-center gap-2"><Calendar className="w-4 h-4"/> Registered: {new Date(founder.created_at).toLocaleDateString()}</span>
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button onClick={() => handleApproval(founder.id, 'approve')} className="bg-green-600 hover:bg-green-700">
-                        <Check className="w-4 h-4 mr-2" /> Approve
-                      </Button>
-                      <Button onClick={() => handleApproval(founder.id, 'reject')} variant="destructive">
-                        <X className="w-4 h-4 mr-2" /> Reject
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))
-            )}
-          </div>
-        )}
+        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/admin/allowing')}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-blue-100 rounded-lg">
+                  <Users className="h-6 w-6 text-blue-600" />
+                </div>
+                <CardTitle>Founder Approvals</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600 mb-4">
+                Review and approve or reject founder registrations
+              </p>
+              <Button className="w-full">Manage Approvals</Button>
+            </CardContent>
+          </Card>
 
-        {activeTab === 'support' && (
-          <div className="space-y-4">
-            {supportMessages.length === 0 ? (
-              <p className="text-gray-500">No support messages.</p>
-            ) : (
-              supportMessages.map(msg => (
-                <Card key={msg.id}>
-                  <CardHeader>
-                    <CardTitle className="text-lg">{msg.user_name}</CardTitle>
-                    <CardDescription>{msg.user_email}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="bg-gray-100 p-3 rounded-md mb-2">{msg.last_message}</p>
-                    <div className="flex justify-end">
-                       <Button size="sm" onClick={() => window.location.href=`/messages/${msg.id}`}>
-                         Reply
-                       </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))
-            )}
-          </div>
-        )}
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/admin/support')}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-green-100 rounded-lg">
+                  <MessageCircle className="h-6 w-6 text-green-600" />
+                </div>
+                <CardTitle>Support Messages</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600 mb-4">
+                View and respond to support messages from users
+              </p>
+              <Button className="w-full">View Messages</Button>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/admin/launchpad/requests')}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-purple-100 rounded-lg">
+                  <Briefcase className="h-6 w-6 text-purple-600" />
+                </div>
+                <CardTitle>Service Requests</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600 mb-4">
+                View and manage project requests from students
+              </p>
+              <Button className="w-full">View Requests</Button>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/admin/courses')}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-yellow-100 rounded-lg">
+                  <GraduationCap className="h-6 w-6 text-yellow-600" />
+                </div>
+                <CardTitle>Course Management</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600 mb-4">
+                Create courses, manage details, and view enrollments
+              </p>
+              <Button className="w-full">Manage Courses</Button>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/admin/users')}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-indigo-100 rounded-lg">
+                  <Users className="h-6 w-6 text-indigo-600" />
+                </div>
+                <CardTitle>User Management</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600 mb-4">
+                Manage users, block/unblock accounts for students and alumni
+              </p>
+              <Button className="w-full">Manage Users</Button>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/admin/events')}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-red-100 rounded-lg">
+                  <Calendar className="h-6 w-6 text-red-600" />
+                </div>
+                <CardTitle>Manage Events</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600 mb-4">
+                Create and manage events like webinars and podcasts
+              </p>
+              <Button className="w-full">Manage Events</Button>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="mt-12 max-w-6xl mx-auto">
+           <AdminStatsSection />
+        </div>
       </div>
     </div>
   )

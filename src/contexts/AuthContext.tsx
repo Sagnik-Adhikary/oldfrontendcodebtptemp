@@ -6,9 +6,12 @@ interface User {
   id: number
   email: string
   name: string
-  role: 'student' | 'alumni'
+  role: 'student' | 'alumni' | 'admin'
   graduation_year?: number
   department?: string
+  is_approved?: boolean
+  is_blocked?: boolean
+  alumni_type?: string
   profile?: {
     bio?: string
     skills?: string[]
@@ -33,6 +36,7 @@ interface RegisterData {
   role: 'student' | 'alumni'
   graduation_year?: number
   department?: string
+  alumni_type?: string
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)

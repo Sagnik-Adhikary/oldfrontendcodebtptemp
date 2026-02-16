@@ -9,7 +9,7 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation()
-  const hideHeaderFooter = ['/login', '/register'].includes(location.pathname)
+  const hideHeaderFooter = ['/login', '/register', '/navbar-demo'].includes(location.pathname)
 
   return (
     <div className="min-h-screen flex flex-col">

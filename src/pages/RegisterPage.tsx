@@ -91,6 +91,7 @@ export const RegisterPage = () => {
     role: 'student' | 'alumni';
     graduationYear: string;
     department: string;
+    alumniType: string;
   }>({
     name: '',
     email: '',
@@ -98,7 +99,8 @@ export const RegisterPage = () => {
     confirmPassword: '',
     role: 'student',
     graduationYear: '',
-    department: ''
+    department: '',
+    alumniType: ''
   })
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -146,8 +148,8 @@ export const RegisterPage = () => {
       return
     }
 
-    if (formData.role === 'alumni' && (!formData.graduationYear || !formData.department)) {
-      setError('Please provide graduation year and department for alumni registration')
+    if (formData.role === 'alumni' && (!formData.graduationYear || !formData.department || !formData.alumniType)) {
+      setError('Please provide graduation year, department and type for alumni registration')
       return
     }
 
@@ -157,7 +159,8 @@ export const RegisterPage = () => {
       password: formData.password,
       role: formData.role,
       graduation_year: formData.graduationYear ? parseInt(formData.graduationYear) : undefined,
-      department: formData.department || undefined
+      department: formData.department || undefined,
+      alumni_type: formData.alumniType || undefined
     })
 
     if (success) {
@@ -267,13 +270,29 @@ export const RegisterPage = () => {
                   </SelectTrigger>
                   <SelectContent className="bg-white border-blue-200">
                     <SelectItem value="student">Current Student</SelectItem>
-                    <SelectItem value="alumni">Founder</SelectItem>
+                    <SelectItem value="alumni">Alumni / Founder</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               {formData.role === 'alumni' && (
                 <>
+                  <div className="space-y-2">
+                    <Label htmlFor="alumniType" className="text-gray-700">Type</Label>
+                    <Select value={formData.alumniType} onValueChange={(value) => handleSelectChange('alumniType', value)}>
+                      <SelectTrigger className="bg-white/70 border-blue-200 text-gray-800">
+                        <SelectValue placeholder="Select type" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white border-blue-200">
+                         <SelectItem value="Founder">Founder</SelectItem>
+                         <SelectItem value="Working Professional">Working Professional</SelectItem>
+                         <SelectItem value="Agency Owner">Agency Owner</SelectItem>
+                         <SelectItem value="Course Manager">Course Manager</SelectItem>
+                         <SelectItem value="Higher Studies">Higher Studies</SelectItem>
+                         <SelectItem value="Other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                   <div className="space-y-2">
                     <Label htmlFor="graduationYear" className="text-gray-700">Graduation Year</Label>
                     <Input

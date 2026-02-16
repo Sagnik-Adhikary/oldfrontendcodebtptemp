@@ -14,6 +14,8 @@ import {
   TrendingUp
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { getApiUrl } from '../config'
 
 export function AboutPage() {
   const values = [
@@ -82,12 +84,30 @@ export function AboutPage() {
     }
   ]
 
-  const stats = [
-    { label: "Years of Excellence", value: "75+", icon: Award },
-    { label: "Alumni Worldwide", value: "50,000+", icon: Globe },
-    { label: "Active Projects", value: "150+", icon: Lightbulb },
-    { label: "Success Stories", value: "200+", icon: Zap }
-  ]
+  const [stats, setStats] = useState([
+    { label: "Years of Excellence", value: "75+", icon: Award, key: 'years_excellence' },
+    { label: "Alumni Worldwide", value: "50,000+", icon: Globe, key: 'alumni_count' },
+    { label: "Active Projects", value: "150+", icon: Lightbulb, key: 'active_projects' },
+    { label: "Success Stories", value: "200+", icon: Zap, key: 'success_stories' }
+  ])
+
+  useEffect(() => {
+    const fetchStats = async () => {
+        try {
+            const res = await fetch(getApiUrl('/api/admin/stats'))
+            if (res.ok) {
+                const data = await res.json()
+                setStats(prev => prev.map(s => {
+                    const remote = data.find((d: any) => d.key === s.key)
+                    return remote ? { ...s, value: remote.value, label: remote.label } : s
+                }))
+            }
+        } catch (error) {
+            console.error('Failed to fetch stats', error)
+        }
+    }
+    fetchStats()
+  }, [])
 
   return (
     <div className="min-h-screen bg-white">

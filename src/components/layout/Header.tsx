@@ -5,7 +5,7 @@ import { Button } from '../../components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '../../components/ui/avatar'
 import { GooeyNav } from '../../components/ui/gooey-nav'
 import { Sheet, SheetContent, SheetTrigger } from '../../components/ui/sheet'
-import { Menu, GraduationCap, Users, BookOpen, MessageCircle, LogOut, User, ChevronDown } from 'lucide-react'
+import { Menu, GraduationCap, Users, BookOpen, MessageCircle, LogOut, User, ChevronDown, Shield, HelpCircle } from 'lucide-react'
 import logoImage from '../../images/name.png'
 import kgpLogo from '../../images/kgp_logo.png'
 import { getApiUrl } from '../../config'
@@ -17,7 +17,6 @@ export const Header: React.FC = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
   const [profileAvatar, setProfileAvatar] = useState<string | null>(null)
 
-  // Fetch profile avatar when user logs in
   useEffect(() => {
     const fetchAvatar = async () => {
       if (user && token) {
@@ -45,19 +44,24 @@ export const Header: React.FC = () => {
     { label: 'About', href: '/about' },
   ]
 
-  // Show different navigation based on user role and current page
   const getNavigationItems = () => {
-    if (!user) {
-      return navigationItems
-    }
-
-    if (user.role === 'alumni') {
+    if (!user) return navigationItems
+    
+    if (user.role === 'admin') {
+      return [
+        { label: 'Dashboard', href: '/admin/dashboard' },
+        { label: 'Approvals', href: '/admin/allowing' },
+        { label: 'Support', href: '/admin/support' },
+      ]
+    } else if (user.role === 'alumni') {
       return [
         { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Launchpad', href: '/launchpad' },
         { label: 'Messages', href: '/messages' },
         { label: 'My Projects', href: '/alumni/projects' },
         { label: 'My Blogs', href: '/alumni/blogs' },
         { label: 'Mentees', href: '/alumni/mentees' },
+        { label: 'Support', href: '/support' },
       ]
     } else if (user.role === 'student') {
       return [
@@ -65,15 +69,9 @@ export const Header: React.FC = () => {
         { label: 'Messages', href: '/messages' },
         { label: 'Founder Connect', href: '/alumni-connect' },
         { label: 'Blog', href: '/blog' },
-      ]
-    } else if (user.role === 'admin') {
-      return [
-        { label: 'Dashboard', href: '/dashboard' },
-        { label: 'Messages', href: '/messages' },
-        { label: 'Blog', href: '/blog' },
+        { label: 'Support', href: '/support' },
       ]
     }
-
     return navigationItems
   }
 
@@ -85,14 +83,22 @@ export const Header: React.FC = () => {
         { name: 'About', href: '/about', icon: GraduationCap },
       ]
     }
-
-    if (user.role === 'alumni') {
+    
+    if (user.role === 'admin') {
+      return [
+        { name: 'Dashboard', href: '/admin/dashboard', icon: Shield },
+        { name: 'Approvals', href: '/admin/allowing', icon: Users },
+        { name: 'Support', href: '/admin/support', icon: MessageCircle },
+      ]
+    } else if (user.role === 'alumni') {
       return [
         { name: 'Dashboard', href: '/dashboard', icon: GraduationCap },
+        { name: 'Launchpad', href: '/launchpad', icon: BookOpen },
         { name: 'Messages', href: '/messages', icon: MessageCircle },
         { name: 'My Projects', href: '/alumni/projects', icon: Users },
         { name: 'My Blogs', href: '/alumni/blogs', icon: BookOpen },
         { name: 'Mentees', href: '/alumni/mentees', icon: Users },
+        { name: 'Support', href: '/support', icon: HelpCircle },
       ]
     } else if (user.role === 'student') {
       return [
@@ -100,14 +106,10 @@ export const Header: React.FC = () => {
         { name: 'Messages', href: '/messages', icon: MessageCircle },
         { name: 'Founder Connect', href: '/alumni-connect', icon: Users },
         { name: 'Blog', href: '/blog', icon: BookOpen },
-      ]
-    } else if (user.role === 'admin') {
-      return [
-        { name: 'Dashboard', href: '/dashboard', icon: GraduationCap },
-        { name: 'Messages', href: '/messages', icon: MessageCircle },
+        { name: 'Support', href: '/support', icon: HelpCircle },
       ]
     }
-
+    
     return [
       { name: 'Founder Connect', href: '/alumni-connect', icon: Users },
       { name: 'Blog', href: '/blog', icon: BookOpen },
@@ -117,7 +119,6 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      {/* Click outside handler for the profile menu */}
       {isProfileMenuOpen && (
         <div
           className="fixed inset-0 z-40"
@@ -130,35 +131,11 @@ export const Header: React.FC = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
               <div className="my-1 md:min-h-20 md:py-4 md:px-6 rounded-xl md:bg-gradient-to-br md:shadow-sm flex gap-1 md:gap-6 items-center">
-
-                {/* Visible on all screens now with responsive sizing */}
-                {/* Mobile: Short Logo */}
-                <img
-                  src="/e_cell.png"
-                  alt="E-Cell"
-                  className="md:hidden h-5 object-contain"
-                />
-                {/* Desktop: Long Logo */}
-                <img
-                  src="/e_cell_long.png"
-                  alt="E-Cell"
-                  className="hidden md:block h-6 md:h-8 object-contain"
-                />
-
-                <img
-                  src="/z21.png"
-                  alt="Logo"
-                  className="hidden md:block h-6 md:h-8 object-contain"
-                />
-
-                {/* Always visible */}
-                <img
-                  src={logoImage}
-                  alt="Logo"
-                  className="h-5 md:h-8 object-contain"
-                />
+                <img src="/e_cell.png" alt="E-Cell" className="md:hidden h-5 object-contain" />
+                <img src="/e_cell_long.png" alt="E-Cell" className="hidden md:block h-6 md:h-8 object-contain" />
+                <img src="/z21.png" alt="Logo" className="hidden md:block h-6 md:h-8 object-contain" />
+                <img src={logoImage} alt="Logo" className="h-5 md:h-8 object-contain" />
               </div>
-
             </Link>
 
             {/* Desktop Navigation with GooeyNav */}
@@ -216,14 +193,6 @@ export const Header: React.FC = () => {
                           <User className="mr-3 h-5 w-5 text-gray-400" />
                           Your Profile
                         </Link>
-                        {/* <Link
-                        to="/settings"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        onClick={() => setIsProfileMenuOpen(false)}
-                      >
-                        <Settings className="mr-3 h-5 w-5 text-gray-400" />
-                        Settings
-                      </Link> */}
                         <button
                           onClick={() => {
                             logout()
@@ -252,16 +221,8 @@ export const Header: React.FC = () => {
 
               {/* Mobile Logos (KGP Forge & Z21) */}
               <div className="flex items-center gap-1 md:hidden mr-1">
-                <img
-                  src={kgpLogo}
-                  alt="KGP Forge"
-                  className="h-6 object-contain"
-                />
-                <img
-                  src="/z21.png"
-                  alt="Z21 Venture"
-                  className="h-6 object-contain"
-                />
+                <img src={kgpLogo} alt="KGP Forge" className="h-6 object-contain" />
+                <img src="/z21.png" alt="Z21 Venture" className="h-6 object-contain" />
               </div>
 
               {/* Mobile Menu */}
